@@ -14,5 +14,11 @@ jobs:
     steps:
     - uses: actions/checkout@v3
       
+    - name: Build containers
+      run: docker-compose -f ./docker-compose.test.yaml build
+      
     - name: Run tests
-      run: make run-tests
+      run: docker-compose -f ./docker-compose.test.yaml run test-service-area-service gotest -v -p=1 ./...
+
+    - name: Cleanup containers
+      run: docker-compose -f ./docker-compose.test.yaml down
