@@ -4,3 +4,6 @@ run-tests:
 		docker-compose -f ./docker-compose.test.yaml \
 		run test-service-area-service gotest -v -p=1 ./... && \
 		docker-compose -f ./docker-compose.test.yaml down
+
+golangci:
+	golangci-lint run

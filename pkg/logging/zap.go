@@ -8,7 +8,7 @@ import (
 )
 
 type Logger interface {
-	Close()
+	Close() error
 	Panic(ctx context.Context, args ...interface{})
 	Fatal(ctx context.Context, args ...interface{})
 	Info(ctx context.Context, msg string, keysAndValues ...interface{})
@@ -35,8 +35,13 @@ func NewSugaredOtelZap(cfg *config.Config) (*OtelzapSugaredLogger, error) {
 	return &OtelzapSugaredLogger{Logger: *sugar, Config: cfg}, nil
 }
 
-func (l *OtelzapSugaredLogger) Close() {
-	l.Logger.Sync()
+func (l *OtelzapSugaredLogger) Close() error {
+	err := l.Logger.Sync()
+	if err != nil {
+		return err
+	}
+
+	return nil
 }
 
 func (l *OtelzapSugaredLogger) Panic(ctx context.Context, args ...interface{}) {

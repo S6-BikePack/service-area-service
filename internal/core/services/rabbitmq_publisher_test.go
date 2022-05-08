@@ -59,6 +59,8 @@ func (suite *RabbitMQPublisherTestSuite) SetupSuite() {
 func (suite *RabbitMQPublisherTestSuite) TestRabbitMQPublisher_CreateServiceArea() {
 	ch, err := suite.TestRabbitMQ.Connection.Channel()
 
+	suite.NoError(err)
+
 	queue, err := ch.QueueDeclare(
 		"",
 		false,
@@ -108,8 +110,14 @@ func (suite *RabbitMQPublisherTestSuite) TestRabbitMQPublisher_CreateServiceArea
 
 		suite.Equal(suite.TestData.ServiceArea, serviceArea)
 
-		msg.Ack(true)
-		ch.Close()
+		err = msg.Ack(true)
+
+		suite.NoError(err)
+
+		err = ch.Close()
+
+		suite.NoError(err)
+
 		return
 	}
 
@@ -117,6 +125,8 @@ func (suite *RabbitMQPublisherTestSuite) TestRabbitMQPublisher_CreateServiceArea
 
 func (suite *RabbitMQPublisherTestSuite) TestRabbitMQPublisher_UpdateServiceArea() {
 	ch, err := suite.TestRabbitMQ.Connection.Channel()
+
+	suite.NoError(err)
 
 	queue, err := ch.QueueDeclare(
 		"",
@@ -167,8 +177,14 @@ func (suite *RabbitMQPublisherTestSuite) TestRabbitMQPublisher_UpdateServiceArea
 
 		suite.Equal(suite.TestData.ServiceArea, serviceArea)
 
-		msg.Ack(true)
-		ch.Close()
+		err = msg.Ack(true)
+
+		suite.NoError(err)
+
+		err = ch.Close()
+
+		suite.NoError(err)
+
 		return
 	}
 }

@@ -28,13 +28,22 @@ func main() {
 	}
 
 	logger, err := logging.NewSugaredOtelZap(cfg)
-	defer logger.Close()
+	defer func(logger *logging.OtelzapSugaredLogger) {
+		err = logger.Close()
+		if err != nil {
+			panic(err)
+		}
+	}(logger)
 
 	if err != nil {
 		panic(err)
 	}
 
 	tracer, err := tracing.NewOpenTracing(cfg.Server.Service, cfg.Tracing.Host, cfg.Tracing.Port)
+
+	if err != nil {
+		panic(err)
+	}
 
 	//--------------------------------------------------------------------------------------
 	// Setup Database

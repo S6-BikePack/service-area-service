@@ -37,7 +37,8 @@ func (rmq *rabbitmqPublisher) publishJson(ctx context.Context, topic string, bod
 		return err
 	}
 
-	ctx, span := rmq.tracer.Start(ctx, "publish")
+	_, span := rmq.tracer.Start(ctx, "publish")
+
 	span.AddEvent(
 		"Published message to rabbitmq",
 		trace.WithAttributes(

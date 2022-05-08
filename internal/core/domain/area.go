@@ -41,7 +41,16 @@ func (l Area) Value() (driver.Value, error) {
 	var poly geom.T
 
 	j, err := json.Marshal(l)
-	geojson.Unmarshal(j, &poly)
+
+	if err != nil {
+		return nil, err
+	}
+
+	err = geojson.Unmarshal(j, &poly)
+
+	if err != nil {
+		return nil, err
+	}
 
 	e, err := wkt.Marshal(poly)
 

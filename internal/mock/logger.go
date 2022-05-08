@@ -4,8 +4,8 @@ import "context"
 
 type Logger struct{}
 
-func (Logger) Close() {
-	return
+func (Logger) Close() error {
+	return nil
 }
 
 func (Logger) Panic(ctx context.Context, args ...interface{}) {
