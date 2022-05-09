@@ -9,9 +9,10 @@
 
 
 <!-- Badges -->
-<p>
 
-</p>
+[![golangci-lint](https://github.com/S6-BikePack/service-area-service/actions/workflows/golangci-lint.yml/badge.svg)](https://github.com/S6-BikePack/service-area-service/actions/workflows/golangci-lint.yml)
+[![Makefile CI](https://github.com/S6-BikePack/service-area-service/actions/workflows/run-tests.yml/badge.svg)](https://github.com/S6-BikePack/service-area-service/actions/workflows/run-tests.yml)
+[![Docker](https://github.com/S6-BikePack/service-area-service/actions/workflows/docker-publish.yml/badge.svg)](https://github.com/S6-BikePack/service-area-service/actions/workflows/docker-publish.yml)
 
 <h4>
     <a href="https://github.com/S6-BikePack">Home</a>
