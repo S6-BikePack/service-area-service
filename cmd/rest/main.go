@@ -27,6 +27,10 @@ func main() {
 		panic(err)
 	}
 
+	//--------------------------------------------------------------------------------------
+	// Setup Logging and Tracing
+	//--------------------------------------------------------------------------------------
+
 	logger, err := logging.NewSugaredOtelZap(cfg)
 	defer func(logger *logging.OtelzapSugaredLogger) {
 		err = logger.Close()

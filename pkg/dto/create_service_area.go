@@ -5,14 +5,8 @@ import (
 )
 
 type BodyCreateServiceArea struct {
-	ID         int
-	Identifier string
-	Name       string
-	Area       domain.Area
-}
-
-type ResponseCreateServiceArea domain.ServiceArea
-
-func BuildResponseCreate(model domain.ServiceArea) ResponseCreateServiceArea {
-	return ResponseCreateServiceArea(model)
+	ID         int         `json:"id"`
+	Identifier string      `json:"identifier"`
+	Name       string      `json:"name"`
+	Area       domain.Area `json:"area"`
 }

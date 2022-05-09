@@ -12,6 +12,7 @@ import (
 	"service-area-service/internal/core/domain"
 	"service-area-service/internal/mock"
 	"service-area-service/pkg/dto"
+	"service-area-service/pkg/logging"
 	"strings"
 	"testing"
 )
@@ -35,7 +36,7 @@ func (suite *RestHandlerTestSuite) SetupSuite() {
 		panic(errors.WithStack(err))
 	}
 
-	logger := mock.Logger{}
+	logger := logging.MockLogger{}
 
 	mockService := new(mock.ServiceAreaService)
 
@@ -177,6 +178,7 @@ func (suite *RestHandlerTestSuite) TestHandler_Create() {
 	suite.NoError(err)
 
 	request, err := http.NewRequest(http.MethodPost, "/api/service-areas", strings.NewReader(string(data)))
+	request.Header.Set("X-User-Claims", `{"admin": true}`)
 
 	suite.NoError(err)
 
@@ -184,7 +186,7 @@ func (suite *RestHandlerTestSuite) TestHandler_Create() {
 
 	suite.Equal(http.StatusOK, rr.Code)
 
-	var responseObject dto.ResponseCreateServiceArea
+	var responseObject dto.ServiceAreaResponse
 	err = json.NewDecoder(rr.Body).Decode(&responseObject)
 
 	suite.NoError(err)
@@ -234,6 +236,7 @@ func (suite *RestHandlerTestSuite) TestHandler_Create_CouldNotCreate() {
 	suite.NoError(err)
 
 	request, err := http.NewRequest(http.MethodPost, "/api/service-areas", strings.NewReader(string(data)))
+	request.Header.Set("X-User-Claims", `{"admin": true}`)
 
 	suite.NoError(err)
 

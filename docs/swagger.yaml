@@ -12,19 +12,6 @@ definitions:
       type:
         type: string
     type: object
-  domain.ServiceArea:
-    properties:
-      area:
-        $ref: '#/definitions/domain.Area'
-      id:
-        type: integer
-      identifier:
-        type: string
-      name:
-        type: string
-      riderCoverage:
-        type: integer
-    type: object
   dto.BodyCreateServiceArea:
     properties:
       area:
@@ -36,7 +23,7 @@ definitions:
       name:
         type: string
     type: object
-  dto.ResponseCreateServiceArea:
+  dto.ServiceAreaResponse:
     properties:
       area:
         $ref: '#/definitions/domain.Area'
@@ -46,8 +33,15 @@ definitions:
         type: string
       name:
         type: string
-      riderCoverage:
+    type: object
+  dto.serviceAreasResponse:
+    properties:
+      id:
         type: integer
+      identifier:
+        type: string
+      name:
+        type: string
     type: object
 info:
   contact: {}
@@ -64,7 +58,9 @@ paths:
           description: OK
           schema:
             items:
-              $ref: '#/definitions/domain.ServiceArea'
+              items:
+                $ref: '#/definitions/dto.serviceAreasResponse'
+              type: array
             type: array
       summary: get all service-areas
     post:
@@ -84,7 +80,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/dto.ResponseCreateServiceArea'
+            $ref: '#/definitions/dto.ServiceAreaResponse'
       summary: create service-area
   /api/service-areas/{id}:
     get:
@@ -101,6 +97,6 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/domain.ServiceArea'
+            $ref: '#/definitions/dto.ServiceAreaResponse'
       summary: get service-area
 swagger: "2.0"

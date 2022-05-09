@@ -54,7 +54,7 @@ func (handler *HTTPHandler) SetupSwagger() {
 // @Description  gets all service-areas in the system
 // @Accept       json
 // @Produce      json
-// @Success      200  {object}  []domain.ServiceArea
+// @Success      200  {object}  []dto.ServiceAreaListResponse
 // @Router       /api/service-areas [get]
 func (handler *HTTPHandler) GetAll(c *gin.Context) {
 	ctx := c.Request.Context()
@@ -78,7 +78,7 @@ func (handler *HTTPHandler) GetAll(c *gin.Context) {
 // @Param        id     path  string           true  "Service-area id"
 // @Description  gets a service-area from the system by its ID
 // @Produce      json
-// @Success      200  {object}  domain.ServiceArea
+// @Success      200  {object}  dto.ServiceAreaResponse
 // @Router       /api/service-areas/{id} [get]
 func (handler *HTTPHandler) Get(c *gin.Context) {
 	ctx := c.Request.Context()
@@ -109,7 +109,7 @@ func (handler *HTTPHandler) Get(c *gin.Context) {
 // @Accept       json
 // @Param        service-area  body  dto.BodyCreateServiceArea  true  "Add service-area"
 // @Produce      json
-// @Success      200  {object}  dto.ResponseCreateServiceArea
+// @Success      200  {object}  dto.ServiceAreaResponse
 // @Router       /api/service-areas [post]
 func (handler *HTTPHandler) Create(c *gin.Context) {
 	ctx := c.Request.Context()
@@ -126,7 +126,7 @@ func (handler *HTTPHandler) Create(c *gin.Context) {
 
 	auth := authorization.NewRest(c)
 
-	if auth.AuthorizeAdmin() || true {
+	if auth.AuthorizeAdmin() {
 
 		serviceArea, err := handler.serviceAreaService.Create(ctx, body.ID, body.Identifier, body.Name, body.Area)
 

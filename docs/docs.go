@@ -32,7 +32,10 @@ const docTemplate = `{
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/domain.ServiceArea"
+                                "type": "array",
+                                "items": {
+                                    "$ref": "#/definitions/dto.serviceAreasResponse"
+                                }
                             }
                         }
                     }
@@ -62,7 +65,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/dto.ResponseCreateServiceArea"
+                            "$ref": "#/definitions/dto.ServiceAreaResponse"
                         }
                     }
                 }
@@ -88,7 +91,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/domain.ServiceArea"
+                            "$ref": "#/definitions/dto.ServiceAreaResponse"
                         }
                     }
                 }
@@ -116,26 +119,6 @@ const docTemplate = `{
                 }
             }
         },
-        "domain.ServiceArea": {
-            "type": "object",
-            "properties": {
-                "area": {
-                    "$ref": "#/definitions/domain.Area"
-                },
-                "id": {
-                    "type": "integer"
-                },
-                "identifier": {
-                    "type": "string"
-                },
-                "name": {
-                    "type": "string"
-                },
-                "riderCoverage": {
-                    "type": "integer"
-                }
-            }
-        },
         "dto.BodyCreateServiceArea": {
             "type": "object",
             "properties": {
@@ -153,7 +136,7 @@ const docTemplate = `{
                 }
             }
         },
-        "dto.ResponseCreateServiceArea": {
+        "dto.ServiceAreaResponse": {
             "type": "object",
             "properties": {
                 "area": {
@@ -167,9 +150,20 @@ const docTemplate = `{
                 },
                 "name": {
                     "type": "string"
-                },
-                "riderCoverage": {
+                }
+            }
+        },
+        "dto.serviceAreasResponse": {
+            "type": "object",
+            "properties": {
+                "id": {
                     "type": "integer"
+                },
+                "identifier": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
                 }
             }
         }

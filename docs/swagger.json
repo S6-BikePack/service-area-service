@@ -20,7 +20,10 @@
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/domain.ServiceArea"
+                                "type": "array",
+                                "items": {
+                                    "$ref": "#/definitions/dto.serviceAreasResponse"
+                                }
                             }
                         }
                     }
@@ -50,7 +53,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/dto.ResponseCreateServiceArea"
+                            "$ref": "#/definitions/dto.ServiceAreaResponse"
                         }
                     }
                 }
@@ -76,7 +79,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/domain.ServiceArea"
+                            "$ref": "#/definitions/dto.ServiceAreaResponse"
                         }
                     }
                 }
@@ -104,26 +107,6 @@
                 }
             }
         },
-        "domain.ServiceArea": {
-            "type": "object",
-            "properties": {
-                "area": {
-                    "$ref": "#/definitions/domain.Area"
-                },
-                "id": {
-                    "type": "integer"
-                },
-                "identifier": {
-                    "type": "string"
-                },
-                "name": {
-                    "type": "string"
-                },
-                "riderCoverage": {
-                    "type": "integer"
-                }
-            }
-        },
         "dto.BodyCreateServiceArea": {
             "type": "object",
             "properties": {
@@ -141,7 +124,7 @@
                 }
             }
         },
-        "dto.ResponseCreateServiceArea": {
+        "dto.ServiceAreaResponse": {
             "type": "object",
             "properties": {
                 "area": {
@@ -155,9 +138,20 @@
                 },
                 "name": {
                     "type": "string"
-                },
-                "riderCoverage": {
+                }
+            }
+        },
+        "dto.serviceAreasResponse": {
+            "type": "object",
+            "properties": {
+                "id": {
                     "type": "integer"
+                },
+                "identifier": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
                 }
             }
         }
