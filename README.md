@@ -18,6 +18,8 @@
     <a href="https://github.com/S6-BikePack">Home</a>
   <span> · </span>
     <a href="https://github.com/S6-BikePack/service-area-service#-about-the-project">Documentation</a>
+  <span> · </span>
+    <a href="https://github.com/S6-BikePack/infrastructure#-about-the-project">Infrastructure</a>
   </h4>
 </div>
 
