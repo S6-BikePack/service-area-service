@@ -3,6 +3,9 @@ package main
 import (
 	"context"
 	"fmt"
+	"github.com/uptrace/opentelemetry-go-extra/otelgorm"
+	"go.opentelemetry.io/contrib/instrumentation/github.com/gin-gonic/gin/otelgin"
+
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 	"os"
@@ -66,6 +69,14 @@ func main() {
 		db.Debug()
 	}
 
+	if err = db.Use(otelgorm.NewPlugin(otelgorm.WithTracerProvider(tracer))); err != nil {
+		panic(err)
+	}
+
+	if err != nil {
+		logger.Fatal(context.Background(), err)
+	}
+
 	serviceAreaRepository, err := repositories.NewServiceAreaRepository(db)
 
 	if err != nil {
@@ -95,6 +106,7 @@ func main() {
 	//--------------------------------------------------------------------------------------
 
 	router := gin.New()
+	router.Use(otelgin.Middleware(cfg.Server.Service, otelgin.WithTracerProvider(tracer)))
 
 	deliveryHandler := handlers.NewHTTPHandler(serviceAreaService, router, logger, cfg)
 	deliveryHandler.SetupEndpoints()
