@@ -1,0 +1,8 @@
+make: Entering directory 'c:/Users/Rens/Documents/Projects/semester6/service-area-service'
+docker volume prune -f && \
+	docker-compose -f ./docker-compose.test.yaml build && \
+	docker-compose -f ./docker-compose.test.yaml \
+	run test-service-area-service gotest -v -p=1 ./... && \
+	docker-compose -f ./docker-compose.test.yaml down
+make: Leaving directory 'c:/Users/Rens/Documents/Projects/semester6/service-area-service'
+ 

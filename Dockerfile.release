@@ -1,0 +1,17 @@
+FROM scratch
+COPY service-area-service /
+
+LABEL traefik.enable=true
+LABEL traefik.http.routers.service-area-rest-create.rule="PathPrefix(`/api/service-areas`) && Method(`POST`)"
+LABEL traefik.http.routers.service-area-rest-create.entrypoints=web
+LABEL traefik.http.routers.service-area-rest-create.middlewares='putheaders, traefik-forward-auth'
+LABEL traefik.http.routers.service-area-rest-create.rule=PathPrefix(`/api/service-areas`)
+LABEL traefik.http.routers.service-area-rest-create.entrypoints=web
+LABEL traefik.http.routers.service-area-rest-create.middlewares='putheaders'
+LABEL traefik.http.middlewares.serviceheaders.headers.accesscontrolalloworiginlist=*
+LABEL traefik.http.middlewares.serviceheaders.headers.accessControlAllowMethods='GET, POST'
+LABEL traefik.http.middlewares.serviceheaders.headers.accessControlAllowHeaders='authorization, content-type'
+
+EXPOSE 1234
+
+ENTRYPOINT ["/service-area-service"]
