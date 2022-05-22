@@ -26,6 +26,7 @@ dockers:
 - image_templates: 
     - "ghcr.io/s6-bikepack/service-area-service:{{ .Version }}"
     - "ghcr.io/s6-bikepack/service-area-service:latest"
+    - "bikepack.azurecr.io/bikepack/service-area-service:latest"
   dockerfile: Dockerfile.release
   build_flag_templates:
   - --label=org.opencontainers.image.title={{ .ProjectName }}
