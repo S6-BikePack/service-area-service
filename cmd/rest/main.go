@@ -3,11 +3,10 @@ package main
 import (
 	"context"
 	"fmt"
+
 	"github.com/uptrace/opentelemetry-go-extra/otelgorm"
 	"go.opentelemetry.io/contrib/instrumentation/github.com/gin-gonic/gin/otelgin"
 
-	"gorm.io/driver/postgres"
-	"gorm.io/gorm"
 	"os"
 	"service-area-service/config"
 	"service-area-service/internal/core/services"
@@ -16,6 +15,9 @@ import (
 	"service-area-service/pkg/logging"
 	"service-area-service/pkg/rabbitmq"
 	"service-area-service/pkg/tracing"
+
+	"gorm.io/driver/postgres"
+	"gorm.io/gorm"
 
 	"github.com/gin-gonic/gin"
 )
@@ -27,7 +29,7 @@ func main() {
 	cfg, err := config.UseConfig(cfgPath)
 
 	if err != nil {
-		panic(err)
+		fmt.Printf("Failed to load config: %v", err)
 	}
 
 	//--------------------------------------------------------------------------------------
@@ -49,7 +51,7 @@ func main() {
 	tracer, err := tracing.NewOpenTracing(cfg.Server.Service, cfg.Tracing.Host, cfg.Tracing.Port)
 
 	if err != nil {
-		panic(err)
+		logger.Warning(context.Background(), "Failed to setup tracing: %v", err)
 	}
 
 	//--------------------------------------------------------------------------------------

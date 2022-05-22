@@ -1,6 +1,8 @@
 package config
 
 import (
+	"fmt"
+
 	"github.com/spf13/viper"
 )
 
@@ -42,12 +44,16 @@ type Tracing struct {
 func UseConfig(path string) (*Config, error) {
 	v := viper.New()
 
+	v.SetDefault("server.service", "service-area-service")
+	v.SetDefault("server.port", "1234")
+	v.SetDefault("server.description", "bikepack project service-area-service")
+
 	v.SetConfigName(path)
 	v.AddConfigPath(".")
 	v.AutomaticEnv()
 
 	if err := v.ReadInConfig(); err != nil {
-		return nil, err
+		fmt.Println(err)
 	}
 
 	var config Config
