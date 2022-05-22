@@ -1,6 +1,7 @@
 package tracing
 
 import (
+	"errors"
 	"go.opentelemetry.io/otel"
 	"go.opentelemetry.io/otel/exporters/jaeger"
 	"go.opentelemetry.io/otel/propagation"
@@ -10,6 +11,10 @@ import (
 )
 
 func NewOpenTracing(serviceName, address string, port int) (*trace.TracerProvider, error) {
+	if serviceName == "" || address == "" || port == 0 {
+		return nil, errors.New("serviceName, address and port must be set")
+	}
+
 	exporter, err := jaeger.New(jaeger.WithAgentEndpoint(
 		jaeger.WithAgentHost(address),
 		jaeger.WithAgentPort(string(rune(port))),

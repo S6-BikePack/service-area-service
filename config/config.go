@@ -2,8 +2,8 @@ package config
 
 import (
 	"fmt"
-
 	"github.com/spf13/viper"
+	"strings"
 )
 
 type Config struct {
@@ -48,13 +48,27 @@ func UseConfig(path string) (*Config, error) {
 	v.SetDefault("server.port", "1234")
 	v.SetDefault("server.description", "bikepack project service-area-service")
 
+	v.SetDefault("database.host", "localhost")
+	v.SetDefault("database.port", 5432)
+	v.SetDefault("database.user", "user")
+	v.SetDefault("database.password", "password")
+
+	v.SetDefault("rabbitmq.host", "localhost")
+	v.SetDefault("rabbitmq.port", 5672)
+	v.SetDefault("rabbitmq.user", "user")
+	v.SetDefault("rabbitmq.password", "password")
+
 	v.SetConfigName(path)
 	v.AddConfigPath(".")
-	v.AutomaticEnv()
 
 	if err := v.ReadInConfig(); err != nil {
 		fmt.Println(err)
 	}
+
+	replacer := strings.NewReplacer(".", "_")
+	viper.SetEnvKeyReplacer(replacer)
+
+	v.AutomaticEnv()
 
 	var config Config
 
