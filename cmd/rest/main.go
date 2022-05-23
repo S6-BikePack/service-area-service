@@ -36,13 +36,7 @@ func main() {
 	// Setup Logging and Tracing
 	//--------------------------------------------------------------------------------------
 
-	logger, err := logging.NewSugaredOtelZap(cfg)
-	defer func(logger *logging.OtelzapSugaredLogger) {
-		err = logger.Close()
-		if err != nil {
-			panic(err)
-		}
-	}(logger)
+	logger, err := logging.NewSimpleLogger(cfg)
 
 	if err != nil {
 		panic(err)
@@ -59,8 +53,8 @@ func main() {
 	//--------------------------------------------------------------------------------------
 
 	dsn := fmt.Sprintf("host=%s port=%d user=%s "+
-		"password=%s dbname=%s sslmode=disable",
-		cfg.Database.Host, cfg.Database.Port, cfg.Database.User, cfg.Database.Password, cfg.Database.Database)
+		"password=%s dbname=%s sslmode=%s",
+		cfg.Database.Host, cfg.Database.Port, cfg.Database.User, cfg.Database.Password, cfg.Database.Database, cfg.Database.SSLMode)
 	logger.Info(context.Background(), "Connecting to database: %s", dsn)
 	db, err := gorm.Open(postgres.Open(dsn))
 
