@@ -67,10 +67,6 @@ func main() {
 	}
 
 	if err = db.Use(otelgorm.NewPlugin(otelgorm.WithTracerProvider(tracer))); err != nil {
-		panic(err)
-	}
-
-	if err != nil {
 		logger.Fatal(context.Background(), err)
 	}
 
