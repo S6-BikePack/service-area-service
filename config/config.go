@@ -52,11 +52,13 @@ func UseConfig(path string) (*Config, error) {
 	v.SetDefault("database.port", 5432)
 	v.SetDefault("database.user", "user")
 	v.SetDefault("database.password", "password")
+	v.SetDefault("database.database", "service-area")
 
 	v.SetDefault("rabbitmq.host", "localhost")
 	v.SetDefault("rabbitmq.port", 5672)
 	v.SetDefault("rabbitmq.user", "user")
 	v.SetDefault("rabbitmq.password", "password")
+	v.SetDefault("rabbitmq.exchange", "topics")
 
 	v.SetConfigName(path)
 	v.AddConfigPath(".")
