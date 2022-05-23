@@ -3,7 +3,6 @@ package main
 import (
 	"context"
 	"fmt"
-	"service-area-service/pkg/azure"
 
 	"github.com/uptrace/opentelemetry-go-extra/otelgorm"
 	"go.opentelemetry.io/contrib/instrumentation/github.com/gin-gonic/gin/otelgin"
@@ -14,6 +13,7 @@ import (
 	"service-area-service/internal/handlers"
 	"service-area-service/internal/repositories"
 	"service-area-service/pkg/logging"
+	"service-area-service/pkg/rabbitmq"
 	"service-area-service/pkg/tracing"
 
 	"gorm.io/driver/postgres"
@@ -77,22 +77,22 @@ func main() {
 	}
 
 	//--------------------------------------------------------------------------------------
-	// Setup Azure Service Bus
+	// Setup RabbitMQ
 	//--------------------------------------------------------------------------------------
 
-	azServiceBus, err := azure.NewAzureServiceBus(cfg)
+	rmqServer, err := rabbitmq.NewRabbitMQ(cfg)
 
 	if err != nil {
 		logger.Fatal(context.Background(), err)
 	}
 
-	azPublisher := services.NewAzurePublisher(azServiceBus, cfg)
+	rmqPublisher := services.NewRabbitMQPublisher(rmqServer, tracer, cfg)
 
 	//--------------------------------------------------------------------------------------
 	// Setup Services
 	//--------------------------------------------------------------------------------------
 
-	serviceAreaService := services.NewServiceAreaService(cfg, azPublisher, serviceAreaRepository)
+	serviceAreaService := services.NewServiceAreaService(cfg, rmqPublisher, serviceAreaRepository)
 
 	//--------------------------------------------------------------------------------------
 	// Setup HTTP server

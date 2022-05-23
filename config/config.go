@@ -10,10 +10,11 @@ import (
 )
 
 type Config struct {
-	Server   Server
-	RabbitMQ RabbitMQ
-	Database Database
-	Tracing  Tracing
+	Server          Server
+	RabbitMQ        RabbitMQ
+	AzureServiceBus AzureServiceBus
+	Database        Database
+	Tracing         Tracing
 }
 
 type Server struct {
@@ -28,6 +29,10 @@ type RabbitMQ struct {
 	User     string
 	Password string
 	Exchange string
+}
+
+type AzureServiceBus struct {
+	ConnectionString string
 }
 
 type Database struct {
@@ -56,6 +61,8 @@ func initDefaultValues() *Config {
 	defaultConfig.RabbitMQ.User = "user"
 	defaultConfig.RabbitMQ.Password = "password"
 	defaultConfig.RabbitMQ.Exchange = "topics"
+
+	defaultConfig.AzureServiceBus.ConnectionString = "Endpoint=sb://servicebus.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=yourkey"
 
 	defaultConfig.Database.Host = "localhost"
 	defaultConfig.Database.Port = 5432
