@@ -13,6 +13,7 @@
 [![golangci-lint](https://github.com/S6-BikePack/service-area-service/actions/workflows/golangci-lint.yml/badge.svg)](https://github.com/S6-BikePack/service-area-service/actions/workflows/golangci-lint.yml)
 [![Makefile CI](https://github.com/S6-BikePack/service-area-service/actions/workflows/run-tests.yml/badge.svg)](https://github.com/S6-BikePack/service-area-service/actions/workflows/run-tests.yml)
 [![Build](https://github.com/S6-BikePack/service-area-service/actions/workflows/build.yml/badge.svg)](https://github.com/S6-BikePack/service-area-service/actions/workflows/build.yml)
+[![Deploy](https://github.com/S6-BikePack/service-area-service/actions/workflows/deploytoAksCluster.yml/badge.svg)](https://github.com/S6-BikePack/service-area-service/actions/workflows/deploytoAksCluster.yml)
 
 <h4>
     <a href="https://github.com/S6-BikePack">Home</a>
