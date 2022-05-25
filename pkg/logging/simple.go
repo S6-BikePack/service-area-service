@@ -27,17 +27,17 @@ func (l *SimpleLogger) Fatal(ctx context.Context, args ...interface{}) {
 }
 
 func (l *SimpleLogger) Info(ctx context.Context, msg string, keysAndValues ...interface{}) {
-	fmt.Printf("INFO: "+msg, keysAndValues)
+	fmt.Printf("INFO: "+msg+"\n", keysAndValues)
 }
 
 func (l *SimpleLogger) Debug(ctx context.Context, msg string, keysAndValues ...interface{}) {
-	fmt.Println("DEBUG: "+msg, keysAndValues)
+	fmt.Printf("DEBUG: "+msg+"\n", keysAndValues)
 }
 
 func (l *SimpleLogger) Warning(ctx context.Context, msg string, keysAndValues ...interface{}) {
-	fmt.Println("WARNING: "+msg, keysAndValues)
+	fmt.Printf("WARNING: "+msg+"\n", keysAndValues)
 }
 
 func (l *SimpleLogger) Error(ctx context.Context, msg string, keysAndValues ...interface{}) {
-	fmt.Println("ERROR: "+msg, keysAndValues)
+	fmt.Printf("ERROR: "+msg+"\n", keysAndValues)
 }

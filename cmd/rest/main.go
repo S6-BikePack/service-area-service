@@ -66,8 +66,10 @@ func main() {
 		db.Debug()
 	}
 
-	if err = db.Use(otelgorm.NewPlugin(otelgorm.WithTracerProvider(tracer))); err != nil {
-		logger.Fatal(context.Background(), err)
+	if tracer != nil {
+		if err = db.Use(otelgorm.NewPlugin(otelgorm.WithTracerProvider(tracer))); err != nil {
+			logger.Fatal(context.Background(), err)
+		}
 	}
 
 	serviceAreaRepository, err := repositories.NewServiceAreaRepository(db)
@@ -99,7 +101,10 @@ func main() {
 	//--------------------------------------------------------------------------------------
 
 	router := gin.New()
-	router.Use(otelgin.Middleware(cfg.Server.Service, otelgin.WithTracerProvider(tracer)))
+
+	if tracer != nil {
+		router.Use(otelgin.Middleware(cfg.Server.Service, otelgin.WithTracerProvider(tracer)))
+	}
 
 	deliveryHandler := handlers.NewHTTPHandler(serviceAreaService, router, logger, cfg)
 	deliveryHandler.SetupEndpoints()
