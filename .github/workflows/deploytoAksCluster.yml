@@ -17,6 +17,11 @@ jobs:
     needs: [build]
     runs-on: ubuntu-latest
     steps:
+    -
+      name: Checkout
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
     - 
       name: Login to aks
       uses: azure/k8s-set-context@v1
