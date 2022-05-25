@@ -13,7 +13,7 @@ spec:
         app: service-area-service
     spec:
       containers:
-      - image: bikepack.azurecr.io/bikepack/service-area-service:test
+      - image: bikepack.azurecr.io/bikepack/service-area-service:latest
         name: service-area
         resources:
           requests:
