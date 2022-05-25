@@ -1,19 +1,65 @@
-apiVersion : apps/v1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: "bikepack-6dc6"
+  name: service-area-service-deployment
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
-      app: "bikepack-6dc6"
+      app: service-area-service
   template:
     metadata:
       labels:
-        app: "bikepack-6dc6"
+        app: service-area-service
     spec:
       containers:
-        - name: "bikepack-6dc6"
-          image: "bikepack.azurecr.io/bikepack"
-          ports:
-          - containerPort: 1234
+      - image: bikepack.azurecr.io/bikepack/service-area-service:test
+        name: service-area
+        resources:
+          requests:
+            cpu: '0'
+            memory: '0'
+          limits:
+            cpu: '256'
+            memory: 11400G
+        ports:
+        - containerPort: 1234
+          protocol: TCP
+        volumeMounts:
+          - mountPath: "/mnt/secrets-store"
+            name: secrets-store01
+            readOnly: true
+        env:
+        - name: SERVER_PORT
+          value: ":1234"
+        - name: DATABASE_HOST
+          value: bikepack-main.postgres.database.azure.com
+        - name: DATABASE_PORT
+          value: '5432'
+        - name: DATABASE_USER
+          valueFrom:
+            secretKeyRef:
+              name: service-area-secret
+              key: dbUser
+        - name: DATABASE_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: service-area-secret
+              key: dbPass
+        - name: DATABASE_DATABASE
+          value: service-area
+        - name: DATABASE_SSLMODE
+          value: require
+        - name: AZURESERVICEBUS_CONNECTIONSTRING
+          valueFrom:
+            secretKeyRef:
+              name: service-area-secret
+              key: sbConn
+      
+      volumes:
+      - name: secrets-store01
+        csi:
+          driver: secrets-store.csi.k8s.io
+          readOnly: true
+          volumeAttributes:
+            secretProviderClass: azure-sync
