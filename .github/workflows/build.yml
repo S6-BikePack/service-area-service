@@ -1,6 +1,9 @@
 name: Build
 
 on:
+  push:
+    branches:
+      - main
   workflow_call:
 
 jobs:
@@ -37,8 +40,8 @@ jobs:
         uses: docker/login-action@v1
         with:
           registry: ${{ secrets.REGISTRY_LOGIN_SERVER }}
-          username: ${{ secrets.REGISTRY_USERNAME }}
-          password: ${{ secrets.REGISTRY_PASSWORD }}
+          username: ${{ secrets.ACR_BIKEPACK_USERNAME }}
+          password: ${{ secrets.ACR_BIKEPACK_PASSWORD }}
       -
         name: Run GoReleaser
         uses: goreleaser/goreleaser-action@v2
