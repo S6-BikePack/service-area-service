@@ -1,17 +1,14 @@
-apiVersion: networking.k8s.io/v1
-kind: Ingress
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
 metadata:
-  name: service-area-service
-  annotations:
-    kubernetes.io/ingress.class: azure/application-gateway
+  name: service-area-ingress
 spec:
-  rules:
-  - http:
-      paths:
-      - path: /api/service-areas
-        pathType: Prefix
-        backend:
-          service:
-            name: service-area-service
-            port: 
-              number: 1234
+  routes:
+    - match: PathPrefix(`/api/service-areas`)
+      kind: Rule
+      services:
+        - name: service-area-service
+          port: 1234
+      middlewares:
+        - name: allow-headers
+        - name: forward-auth

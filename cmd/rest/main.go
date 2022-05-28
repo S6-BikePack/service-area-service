@@ -55,7 +55,6 @@ func main() {
 	dsn := fmt.Sprintf("host=%s port=%d user=%s "+
 		"password=%s dbname=%s sslmode=%s",
 		cfg.Database.Host, cfg.Database.Port, cfg.Database.User, cfg.Database.Password, cfg.Database.Database, cfg.Database.SSLMode)
-	logger.Info(context.Background(), "Connecting to database: %s", dsn)
 	db, err := gorm.Open(postgres.Open(dsn))
 
 	if err != nil {
